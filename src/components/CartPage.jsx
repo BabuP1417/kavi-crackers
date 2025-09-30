@@ -66,7 +66,7 @@ export default function CartPage() {
       return;
     }
 
-    const WHATSAPP_NUMBER = "917010699418"; // replace with your WhatsApp number
+    const WHATSAPP_NUMBER = "916380362354"; // replace with your WhatsApp number
 
     // Build product list
     let productLines = "";

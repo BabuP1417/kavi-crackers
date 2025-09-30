@@ -35,7 +35,7 @@ export default function CrackerList() {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Shop Crackers</h2>
+      <h2 className="text-2xl font-bold mb-4">Kavi Thuraiyur Crackers</h2>
 
       <div className="mb-6 flex flex-wrap gap-2">
         <button

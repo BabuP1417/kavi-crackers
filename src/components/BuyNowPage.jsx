@@ -12,7 +12,7 @@ export default function BuyNowPage() {
 
   if (!product) return <div>Product not found.</div>;
 
-  const WHATSAPP_NUMBER = "917010699418"; // <- put your number here
+  const WHATSAPP_NUMBER = "916380362354"; // <- put your number here
 
   function handleChange(e) {
     const { name, value } = e.target;
