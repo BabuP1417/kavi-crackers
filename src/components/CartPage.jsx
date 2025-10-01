@@ -132,7 +132,8 @@ export default function CartPage() {
           {/* Image + Info */}
           <div className="flex gap-4 items-center flex-1">
             <img
-              src={`https://kavi-backend-64wb.onrender.com${item.imageUrl}`}
+              // src={`https://kavi-backend-64wb.onrender.com${item.imageUrl}`}
+              src={item.imageUrl}
               alt={item.name}
               className="w-20 h-20 object-cover rounded-lg shadow"
             />

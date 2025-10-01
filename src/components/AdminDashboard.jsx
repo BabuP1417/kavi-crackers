@@ -11,6 +11,8 @@ export default function AdminDashboard() {
   const [crackers, setCrackers] = useState([]);
   const [editId, setEditId] = useState(null);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [modalImage, setModalImage] = useState(null);
 
   useEffect(() => {
     const t = localStorage.getItem("admin_token");
@@ -25,34 +27,43 @@ export default function AdminDashboard() {
     setCrackers(res.data);
   }
 
-  async function save(e) {
-    e.preventDefault();
-    setMsg(null);
-    try {
-      const formData = new FormData();
-      formData.append("title", title);
-      formData.append("name", name);
-      formData.append("price", price);
-      if (image) formData.append("image", image);
+ async function save(e) {
+  e.preventDefault();
+  setMsg(null);
+  try {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("name", name);
+    formData.append("price", price);
 
-      if (editId) {
-        await API.put(`/crackers/${editId}`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        setMsg("Updated successfully");
-      } else {
-        await API.post("/crackers", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        setMsg("Added successfully");
+    if (image) {
+      formData.append("image", image);
+    } else if (editId) {
+      // Find the cracker being edited and send its imageUrl
+      const cracker = crackers.find(c => c._id === editId);
+      if (cracker && cracker.imageUrl) {
+        formData.append("imageUrl", cracker.imageUrl);
       }
-
-      resetForm();
-      fetchCrackers();
-    } catch (err) {
-      setMsg(err.response?.data?.message || "Error");
     }
+
+    if (editId) {
+      await API.put(`/crackers/${editId}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setMsg("Updated successfully");
+    } else {
+      await API.post("/crackers", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setMsg("Added successfully");
+    }
+
+    resetForm();
+    fetchCrackers();
+  } catch (err) {
+    setMsg(err.response?.data?.message || "Error");
   }
+}
 
   function edit(c) {
     setTitle(c.title);
@@ -158,9 +169,14 @@ export default function AdminDashboard() {
         {crackers.map((c) => (
           <div key={c._id} className="border rounded shadow p-2">
             <img
-              src={`https://kavi-backend-64wb.onrender.com${c.imageUrl}`}
+              // src={`https://kavi-backend-64wb.onrender.com${c.imageUrl}`}
+               src={c.imageUrl}
               alt={c.name}
-              className="w-full h-32 object-cover rounded"
+              className="w-full h-32 object-cover rounded cursor-pointer"
+              onClick={() => {
+                setModalImage(c.imageUrl);
+                setShowModal(true);
+              }}
             />
             <div className="mt-2">
               <h4 className="font-semibold">{c.name}</h4>
@@ -185,6 +201,32 @@ export default function AdminDashboard() {
           </div>
         ))}
       </div>
+
+       {/* Modal for full-size image */}
+      {showModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+          onClick={() => setShowModal(false)}
+        >
+          <button
+            className="absolute top-4 right-4 text-white text-3xl font-bold z-60"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowModal(false);
+            }}
+            aria-label="Close"
+          >
+            &times;
+          </button>
+          <img
+            src={modalImage}
+            alt="Full Size"
+            className="max-h-[90vh] max-w-[90vw] rounded shadow-lg object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
     </div>
   );
 }

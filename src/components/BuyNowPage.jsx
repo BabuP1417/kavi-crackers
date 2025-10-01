@@ -69,7 +69,11 @@ export default function BuyNowPage() {
 
       {/* product block */}
       <div className="border p-2 rounded flex items-center gap-4">
-        <img src={`https://kavi-backend-64wb.onrender.com${product.imageUrl}`} alt={product.name} className="w-20 h-20 object-cover rounded" />
+        <img 
+        // src={`https://kavi-backend-64wb.onrender.com${product.imageUrl}`}
+        src={product.imageUrl} 
+        alt={product.name} 
+        className="w-20 h-20 object-cover rounded" />
         <div>
           <h3 className="font-semibold">{product.name}</h3>
           <p className="text-rose-600 font-bold">₹{product.price}</p>
