@@ -28,7 +28,7 @@ const navigate = useNavigate();
   return (
     <div className="bg-white shadow rounded-lg overflow-hidden">
       <img
-        src={`https://kavi-backend-64wb.onrender.com${item.imageUrl}`}
+        src={`https://kavi-backend-64wb.onrender.com/uploads/${item.imageUrl}`}
         alt={item.name}
         className="w-full h-48 object-cover"
       />

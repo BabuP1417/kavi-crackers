@@ -158,7 +158,7 @@ export default function AdminDashboard() {
         {crackers.map((c) => (
           <div key={c._id} className="border rounded shadow p-2">
             <img
-              src={`https://kavi-backend-64wb.onrender.com${c.imageUrl}`}
+              src={`https://kavi-backend-64wb.onrender.com/uploads/${c.imageUrl}`}
               alt={c.name}
               className="w-full h-32 object-cover rounded"
             />
